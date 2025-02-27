@@ -1,0 +1,2 @@
+前端采用UNIAPP 实现，使用Hbuildx开发调试
+后端使用springboot
