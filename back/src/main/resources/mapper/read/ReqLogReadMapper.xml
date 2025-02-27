@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ygl.mapper.read.ReqLogReadMapper">
+
+    <resultMap type="com.ygl.entity.ReqLogPo" id="ReqLogMap">
+                    <result property="reqLogId" column="req_log_id" jdbcType="INTEGER"/>
+                    <result property="input" column="input" jdbcType="VARCHAR"/>
+                    <result property="output" column="output" jdbcType="VARCHAR"/>
+                    <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+                    <result property="reqStas" column="req_stas" jdbcType="VARCHAR"/>
+                    <result property="reqTime" column="req_time" jdbcType="VARCHAR"/>
+            </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="ReqLogMap">
+        select
+          req_log_id, input, output, create_time, req_stas, req_time
+        from ygl.req_log
+        where req_log_id = #{reqLogId,jdbcType=INTEGER}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="ReqLogMap">
+        select
+        req_log_id, input, output, create_time, req_stas, req_time
+        from ygl.req_log
+        <where>
+                            <if test="reqLogId != null">
+                    and req_log_id = #{reqLogId,jdbcType=INTEGER}
+                </if>
+                            <if test="input != null and input != ''">
+                    and input = #{input,jdbcType=VARCHAR}
+                </if>
+                            <if test="output != null and output != ''">
+                    and output = #{output,jdbcType=VARCHAR}
+                </if>
+                            <if test="createTime != null">
+                    and create_time = #{createTime,jdbcType=TIMESTAMP}
+                </if>
+                            <if test="reqStas != null and reqStas != ''">
+                    and req_stas = #{reqStas,jdbcType=VARCHAR}
+                </if>
+                            <if test="reqTime != null and reqTime != ''">
+                    and req_time = #{reqTime,jdbcType=VARCHAR}
+                </if>
+                    </where>
+    </select>
+</mapper>

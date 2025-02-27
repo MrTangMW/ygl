@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ygl.mapper.read.CommentInfoReadMapper">
+
+    <resultMap type="com.ygl.entity.CommentInfoPo" id="CommentInfoMap">
+                    <result property="commentId" column="comment_id" jdbcType="VARCHAR"/>
+                    <result property="articleId" column="article_id" jdbcType="VARCHAR"/>
+                    <result property="useFlag" column="use_flag" jdbcType="INTEGER"/>
+                    <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+                    <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+                    <result property="opterName" column="opter_name" jdbcType="VARCHAR"/>
+                    <result property="opterId" column="opter_id" jdbcType="VARCHAR"/>
+                    <result property="commentContent" column="comment_content" jdbcType="VARCHAR"/>
+                    <result property="commentFj" column="comment_fj" jdbcType="VARCHAR"/>
+                    <result property="commentNum" column="comment_num" jdbcType="INTEGER"/>
+            </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="CommentInfoMap">
+        select
+          comment_id, article_id, use_flag, create_time, update_time, opter_name, opter_id, comment_content, comment_fj, comment_num
+        from ygl.comment_info
+        where comment_id = #{commentId,jdbcType=VARCHAR}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="CommentInfoMap">
+        select
+        comment_id, article_id, use_flag, create_time, update_time, opter_name, opter_id, comment_content, comment_fj, comment_num
+        from ygl.comment_info
+        <where>
+                            <if test="commentId != null and commentId != ''">
+                    and comment_id = #{commentId,jdbcType=VARCHAR}
+                </if>
+                            <if test="articleId != null and articleId != ''">
+                    and article_id = #{articleId,jdbcType=VARCHAR}
+                </if>
+                            <if test="useFlag != null">
+                    and use_flag = #{useFlag,jdbcType=INTEGER}
+                </if>
+                            <if test="createTime != null">
+                    and create_time = #{createTime,jdbcType=TIMESTAMP}
+                </if>
+                            <if test="updateTime != null">
+                    and update_time = #{updateTime,jdbcType=TIMESTAMP}
+                </if>
+                            <if test="opterName != null and opterName != ''">
+                    and opter_name = #{opterName,jdbcType=VARCHAR}
+                </if>
+                            <if test="opterId != null and opterId != ''">
+                    and opter_id = #{opterId,jdbcType=VARCHAR}
+                </if>
+                            <if test="commentContent != null and commentContent != ''">
+                    and comment_content = #{commentContent,jdbcType=VARCHAR}
+                </if>
+                            <if test="commentFj != null and commentFj != ''">
+                    and comment_fj = #{commentFj,jdbcType=VARCHAR}
+                </if>
+                            <if test="commentNum != null">
+                    and comment_num = #{commentNum,jdbcType=INTEGER}
+                </if>
+                    </where>
+    </select>
+</mapper>

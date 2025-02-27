@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ygl.mapper.write.ReqLogWriteMapper">
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="reqLogId" useGeneratedKeys="true">
+        insert into ygl.req_log(input, output, create_time, req_stas, req_time)
+        values (#{input,jdbcType=VARCHAR}, #{output,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{reqStas,jdbcType=VARCHAR}, #{reqTime,jdbcType=VARCHAR})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update ygl.req_log
+        <set>
+                            <if test="input != null and input != ''">
+                    input = #{input},
+                </if>
+                            <if test="output != null and output != ''">
+                    output = #{output},
+                </if>
+                            <if test="createTime != null">
+                    create_time = #{createTime},
+                </if>
+                            <if test="reqStas != null and reqStas != ''">
+                    req_stas = #{reqStas},
+                </if>
+                            <if test="reqTime != null and reqTime != ''">
+                    req_time = #{reqTime},
+                </if>
+                    </set>
+        where req_log_id = #{reqLogId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from ygl.req_log where req_log_id = #{reqLogId,jdbcType=INTEGER}
+    </delete>
+
+</mapper>

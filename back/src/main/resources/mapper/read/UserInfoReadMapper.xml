@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ygl.mapper.read.UserInfoReadMapper">
+
+    <resultMap type="com.ygl.entity.UserInfoPo" id="UserInfoMap">
+                    <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+                    <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+                    <result property="userSex" column="user_sex" jdbcType="VARCHAR"/>
+                    <result property="userHeadUrl" column="user_head_url" jdbcType="VARCHAR"/>
+                    <result property="userIntro" column="user_intro" jdbcType="VARCHAR"/>
+                    <result property="userBirth" column="user_birth" jdbcType="TIMESTAMP"/>
+                    <result property="useFlag" column="use_flag" jdbcType="INTEGER"/>
+                    <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+                    <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+                    <result property="opterName" column="opter_name" jdbcType="VARCHAR"/>
+                    <result property="opterId" column="opter_id" jdbcType="VARCHAR"/>
+                    <result property="thirdId" column="third_id" jdbcType="VARCHAR"/>
+            </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="UserInfoMap">
+        select
+          user_id, user_name, user_sex, user_head_url, user_intro, user_birth, use_flag, create_time, update_time, opter_name, opter_id, third_id
+        from ygl.user_info
+        where user_id = #{userId,jdbcType=VARCHAR}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="UserInfoMap">
+        select
+        user_id, user_name, user_sex, user_head_url, user_intro, user_birth, use_flag, create_time, update_time, opter_name, opter_id, third_id
+        from ygl.user_info
+        <where>
+                            <if test="userId != null and userId != ''">
+                    and user_id = #{userId,jdbcType=VARCHAR}
+                </if>
+                            <if test="userName != null and userName != ''">
+                    and user_name = #{userName,jdbcType=VARCHAR}
+                </if>
+                            <if test="userSex != null and userSex != ''">
+                    and user_sex = #{userSex,jdbcType=VARCHAR}
+                </if>
+                            <if test="userHeadUrl != null and userHeadUrl != ''">
+                    and user_head_url = #{userHeadUrl,jdbcType=VARCHAR}
+                </if>
+                            <if test="userIntro != null and userIntro != ''">
+                    and user_intro = #{userIntro,jdbcType=VARCHAR}
+                </if>
+                            <if test="userBirth != null">
+                    and user_birth = #{userBirth,jdbcType=TIMESTAMP}
+                </if>
+                            <if test="useFlag != null">
+                    and use_flag = #{useFlag,jdbcType=INTEGER}
+                </if>
+                            <if test="createTime != null">
+                    and create_time = #{createTime,jdbcType=TIMESTAMP}
+                </if>
+                            <if test="updateTime != null">
+                    and update_time = #{updateTime,jdbcType=TIMESTAMP}
+                </if>
+                            <if test="opterName != null and opterName != ''">
+                    and opter_name = #{opterName,jdbcType=VARCHAR}
+                </if>
+                            <if test="opterId != null and opterId != ''">
+                    and opter_id = #{opterId,jdbcType=VARCHAR}
+                </if>
+                            <if test="thirdId != null and thirdId != ''">
+                    and third_id = #{thirdId,jdbcType=VARCHAR}
+                </if>
+                    </where>
+    </select>
+</mapper>

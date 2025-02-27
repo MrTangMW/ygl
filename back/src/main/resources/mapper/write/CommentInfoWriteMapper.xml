@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ygl.mapper.write.CommentInfoWriteMapper">
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="commentId" useGeneratedKeys="true">
+        insert into ygl.comment_info(article_id, use_flag, create_time, update_time, opter_name, opter_id, comment_content, comment_fj, comment_num)
+        values (#{articleId,jdbcType=VARCHAR}, #{useFlag,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{opterName,jdbcType=VARCHAR}, #{opterId,jdbcType=VARCHAR}, #{commentContent,jdbcType=VARCHAR}, #{commentFj,jdbcType=VARCHAR}, #{commentNum,jdbcType=INTEGER})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update ygl.comment_info
+        <set>
+                            <if test="articleId != null and articleId != ''">
+                    article_id = #{articleId},
+                </if>
+                            <if test="useFlag != null">
+                    use_flag = #{useFlag},
+                </if>
+                            <if test="createTime != null">
+                    create_time = #{createTime},
+                </if>
+                            <if test="updateTime != null">
+                    update_time = #{updateTime},
+                </if>
+                            <if test="opterName != null and opterName != ''">
+                    opter_name = #{opterName},
+                </if>
+                            <if test="opterId != null and opterId != ''">
+                    opter_id = #{opterId},
+                </if>
+                            <if test="commentContent != null and commentContent != ''">
+                    comment_content = #{commentContent},
+                </if>
+                            <if test="commentFj != null and commentFj != ''">
+                    comment_fj = #{commentFj},
+                </if>
+                            <if test="commentNum != null">
+                    comment_num = #{commentNum},
+                </if>
+                    </set>
+        where comment_id = #{commentId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from ygl.comment_info where comment_id = #{commentId,jdbcType=VARCHAR}
+    </delete>
+
+</mapper>
