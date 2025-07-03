@@ -3,7 +3,6 @@ package com.ygl.rest;
 import com.ygl.entity.UserInfoPo;
 import com.ygl.service.read.UserInfoReadService;
 import com.ygl.service.write.UserInfoWriteService;
-import org.apache.catalina.AccessLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,6 +32,7 @@ public class BaseService {
 
     @Resource
     private UserInfoReadService userInfoReadService;
+
 
     @PostMapping("login")
     public void login(){
@@ -69,7 +69,7 @@ public class BaseService {
                 userInfoPo.setOpterId(resultSet.getString("opter_id"));
                 userInfoPo.setOpterName(resultSet.getString("opter_name"));
                 userInfoPo.setThirdId(resultSet.getString("third_id"));
-                System.out.println(userInfoPo.toMap());
+               // System.out.println(userInfoPo.toMap());
             }
         } catch (SQLException e) {
             // 处理异常

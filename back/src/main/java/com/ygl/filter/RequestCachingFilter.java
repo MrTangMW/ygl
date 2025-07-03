@@ -19,7 +19,7 @@ public class RequestCachingFilter implements Filter {
 
         // 触发缓存填充（必须执行）
         wrappedRequest.getParameterMap();
-
+        System.out.print("RequestCachingFilter:1");
         chain.doFilter(wrappedRequest, response);
     }
 }
