@@ -4,6 +4,7 @@ import com.ygl.entity.UserInfoPo;
 import com.ygl.service.read.UserInfoReadService;
 import com.ygl.service.write.UserInfoWriteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -13,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @ClassName: baseService
@@ -32,6 +34,9 @@ public class BaseService {
 
     @Resource
     private UserInfoReadService userInfoReadService;
+
+    @Resource
+    private StringRedisTemplate stringRedisTemplate;
 
 
     @PostMapping("login")
@@ -82,5 +87,15 @@ public class BaseService {
     public UserInfoPo getUserInfoPo(@RequestBody Map req) {
         System.out.println(req);
         return   userInfoReadService.queryById("1");
+    }
+
+    @PostMapping("getRedisVaule")
+    public String getRedisVaule(@RequestBody Map req) {
+         return stringRedisTemplate.opsForValue().get(req.get("key"));
+    }
+
+    @PostMapping("setRedisVaule")
+    public void setRedisVaule(@RequestBody Map req) {
+         stringRedisTemplate.opsForValue().set(req.get("key").toString(), req.get("value").toString(),5, TimeUnit.SECONDS);
     }
 }
